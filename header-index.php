@@ -13,5 +13,5 @@
   <body class="container">
   <h1 class="text-center"><a href="index.php">Blogg by Mimmi & Annelie</a></h1>
   <br>
-  <button><a href="admin/adminstart.php">Adminsidan</a></button>
+  <button><a href="admin/index.php">Adminsidan</a></button>
   <br><hr>

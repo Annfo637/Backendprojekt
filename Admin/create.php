@@ -1,24 +1,31 @@
 <?php
 
-//Startsida för adminfunktionen
 //Formulär för att skapa innehåll till bloggsidan
 
   require_once 'db.php';
   require_once 'header.php';
+  
 
   if($_SERVER['REQUEST_METHOD'] === 'POST') :
     //print_r($_POST);
-    $sql = "INSERT INTO backendprojekt_posts(subject, message)
-            VALUES (:subject, :message)";
+    $sql = "INSERT INTO backendprojekt_posts(subject, message, iframe, image)
+            VALUES (:subject, :message, :iframe, :image)";
 
     $stmt =  $db->prepare($sql);
 
     $subject = htmlspecialchars($_POST['subject']);
     $message = htmlspecialchars($_POST['message']);
+    $iframe = htmlspecialchars($_POST['iframe']);
+    $image = htmlspecialchars($_POST['image']);
+    //$publish = htmlspecialchars($_POST['publish']);
+    
 
     $stmt->bindParam(':subject', $subject);
     $stmt->bindParam(':message', $message);
-
+    $stmt->bindParam(':iframe',  $iframe);
+    $stmt->bindParam(':image', $image);
+    //$stmt->bindParam(':publish', $publish);
+   
     $stmt->execute();
 
   endif;
@@ -33,7 +40,7 @@
 <br>
   <input 
     type="text" 
-    id="subject"s
+    id="subject"
     name="subject">
 <br>
 
@@ -47,37 +54,57 @@
     maxlength="1000">
     </textarea>
 <br>
-
-<!-- separat textarea för kartor, videos
-<label for="iframe">Lägg till (länk till?) en karta eller video</label>
+<label for="iframe">Videoklipp/kartor här</label>
 <br>
-<textarea 
-    name="iframe" 
-    id="iframe" 
-    cols="100" ?
-    rows="30" ?
-    maxlength="1000"> ?
-    </textarea>
+<input 
+type="text"
+id="iframe"
+name="iframe">
 <br>
--->
+<br>
+<button>
+  <a href="upload-form.php">Ladda upp bilder här</a>
+</button>
+<br>
 
-<!--ladda upp bilder här-->
 
+<br>
+<br>
+<h3>Välj om du vill publicera eller avpublicera detta inlägg</h3>
+<input 
+          type='radio' 
+          id='publicerad' 
+          name='publish' 
+          value='publicerad'
+          checked='true'
+          required="required">
+          <label for='publicerad'>Publicera</label><br>
+        <input 
+          type='radio' 
+          id='avpublicerad' 
+          name='publish' 
+          value='avpublicerad'
+          required="required">
+          <label for='avpublicerad'>Avpublicera</label><br>
+
+<br>
   <input 
+    class="btn btn-outline-success"
     type="submit"
-    value="Publicera">
+    value="Spara">
   
 </form>
 <br>
 
+
+<button>
+  <a href="index.php">Adminpanelen</a>
+</button>
 <button>
   <a href="../index.php">Visa min blogg</a>
 </button>
-<button>
-  <a href="adminstart.php">Tillbaka</a>
-</button>
 
 <?php
-  //header('Location:show-posts.php');
+
   require_once 'footer.php'
 ?>

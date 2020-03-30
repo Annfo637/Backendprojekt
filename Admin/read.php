@@ -8,20 +8,27 @@ require_once 'db.php';
         $id    = htmlspecialchars($row['id']);
         $subject = htmlspecialchars($row['subject']);
         $message = htmlspecialchars($row['message']);
+        $iframe = $row ['iframe'];
+        $image = htmlspecialchars($row['image']);
         $date = htmlspecialchars($row['date']);
-    echo 
-    "<div>
-        <h2>$subject</h2>
-        <br>
-        <div>
-            <p>";
-            //infogar endast <br> och inte ny p-tagg...
-             echo nl2br($message);
-            echo "</p>
-        </div>
-        <br>
-        <p>$date</p>
-        <hr>
-    </div>";
+        $publish = htmlspecialchars($row['publish']);
+        
+      if($publish === 'publicerad'){
+            echo 
+            "<div>
+                <h2>$subject</h2>
+                <br>
+                <div>
+                    <p>";
+                    echo str_replace(PHP_EOL, "</p><p>", $message);
+                    echo "</p>
+                </div>
+                <br>
+                <div>$image</div>
+                <br>
+                <p>$date</p>
+                <hr>
+            </div>";
+      }
 
     endwhile;

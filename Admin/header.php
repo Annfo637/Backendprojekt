@@ -11,4 +11,4 @@
     <title>Blogg by Mimmi & Annelie</title>
   </head>
   <body class="container">
-  <h1 class="text-center"><a href="adminstart.php">Admin - Blogg by Mimmi & Annelie</a></h1><br>
+  <h1 class="text-center"><a href="index.php">Admin - Blogg by Mimmi & Annelie</a></h1><br>
