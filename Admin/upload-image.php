@@ -1,12 +1,10 @@
 <?php
-$imgArray = array(); //testat att deklarera bildarrayen längst ut
 if (isset($_POST['submit'])) {
     $max_file_size = 1048576;
     $file_types = array('gif', 'jpg', 'jpeg', 'png');
-   //mapp där bilder ska sparas
+    //mapp där bilder ska sparas
     $target_dir = realpath(dirname(__FILE__)) . '/images/';
     $errors = array();
-    //$imgArray = array(); //Tömmer denna arrayen för varje POST?
     
     //bildinformation
     $file_tmp = $_FILES['image']['tmp_name'];
@@ -14,8 +12,8 @@ if (isset($_POST['submit'])) {
     $file_size = $_FILES['image']['size'];
     $file_uniq = uniqid();
     $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
-    $file = $target_dir . $file_uniq . '.' . $file_ext;
-    //$file = $target_dir . $file_name;
+    //$file = $target_dir . $file_uniq . '.' . $file_ext;
+    $file = $target_dir . $file_name;
 
     //Kontrollera att fil har laddats upp
     if (!is_uploaded_file($file_tmp)) {
@@ -34,24 +32,22 @@ if (isset($_POST['submit'])) {
         $errors [] = 'Filen måste vara av typen JPG, JPEG, PNG eller GIF.';
     }
     //Kontrollerar om filen redan existerar
-    if (file_exists($file)) {
+    //Bortkommenterad eftersom vi i nuläget sparar bilder med filnamn och inte id
+    /*if (file_exists($file)) {
         $errors [] = 'Filen existerar redan.';
-    }
+    }*/
+
     //Kontrollerar om fel uppstått 
     if (count($errors) == 0){
         //Kontrollera om filen sparats i angiven mapp
         if (move_uploaded_file($file_tmp, $file)) {
             $success = 'Filen har laddats upp.';
-            $imgArray [] .= $file_name;
-            //echo $file_name;
-            print_r($imgArray);
+            $img= $file_name;
+            print_r($img);
         }
         else {
             $errors [] = 'Ett fel inträffade vid uppladdning av bilden.';
         }
     }
 }
-//$imgArray = array();
-//$imgArray [] = $image;
-//print_r($imgArray);
 ?>

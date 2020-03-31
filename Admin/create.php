@@ -6,8 +6,13 @@
   require_once 'db.php';
   require_once 'header.php';
 
+  //Om en get-request skickats från upload-form
+  //ska variabeln $img sättas till bildnamnet som kommer i requesten
+  if($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $img = htmlspecialchars($_GET['image-add']);
+  }
+
   if($_SERVER['REQUEST_METHOD'] === 'POST') :
-    //print_r($_POST);
     $sql = "INSERT INTO backendprojekt_posts(subject, message, publish, iframe, image)
             VALUES (:subject, :message, :publish, :iframe, :image)";
 
@@ -28,6 +33,7 @@
   
    
     $stmt->execute();
+    //tillbaka till adminpanelen efter att statement körts
     header('Location:index.php');
   endif;
 
@@ -42,7 +48,8 @@
   <input 
     type="text" 
     id="subject"
-    name="subject">
+    name="subject"
+    size="50">
 <br>
 
 <label for="message">Skriv ditt inlägg här</label>
@@ -71,11 +78,26 @@
   <a href="upload-form.php">Ladda upp bilder här</a>
 </button>
 <br>
-  <ul></ul>
+<label for="image">Vald bild</label>
+<br>
+  <input 
+    type="text" 
+    id="image"
+    name="image"
+    value="<?php echo $img ?>">
+<br>
+<!--dold input för bildens id, inte aktuellt med nuvarande kod-->
+<!--<br>
+  <input 
+    type="hidden" 
+    id="image-id"
+    name="image-id"
+    value="<?php //echo $file_uniq?>">-->
+<br>
 
   
-  <br>
-  <br>
+<br>
+<br>
 <h3>Välj om du vill publicera eller avpublicera detta inlägg</h3>
 <input 
           type='radio' 

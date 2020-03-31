@@ -5,8 +5,18 @@ require_once 'upload-image.php';
 //Kontrollera om uppladdning lyckats
 if (!empty($success)) {
     echo $success;
+    $img = $file_name;
+    //har bilden laddats upp till databas ska nytt formulär visas
+    //där man lägger till bilden i sitt inlägg
+    $addform =
+    "<form action='create.php' method='get'>
+        <input type='text' name='image-add' value='$img'>
+        <input type='submit' name='submit-img' value='Lägg till bilden i ditt inlägg'>
+    </form>
+    <br>
+    <br>";
 }
-//Kontrollera eventuella felmeddelanden
+//Kontrollera eventuella felmeddelanden, använder vi denna???
 if (!empty($errors)) {
     echo '<ul>
             <li>' . implode('</li><li>', $errors) . '</li>
@@ -17,21 +27,20 @@ if (!empty($errors)) {
     <fieldset>
         <legend>Välj bild att ladda upp:</legend>
         <input type="file" name="image" id="image">
-        <input type="submit" value="Ladda upp" name="submit">
+        <input type="submit" name="submit" value="Ladda upp">
     </fieldset>
 </form>
 <br>
 <?php 
-    if (!empty($imgArray)) {
-        echo '<ul>
-                <li>' . implode('</li><li>', $imgArray) . '</li>
-            </ul';
+//rita ut formulär för att lägga till bild till inlägg under
+//formulär där man väljer bild
+if (!empty($addform)) {
+    echo $addform;
 }
 ?>
-<br>
-<br>
+
 <button>
-  <a href="create.php">Tillbaka till skapa inlägg</a>
+  <a href="create.php">Avbryt, tillbaka till skapa inlägg</a>
 </button>
 
 <?php

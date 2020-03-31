@@ -10,7 +10,7 @@
 
   if(isset($_GET['id'])){
     $id = htmlspecialchars($_GET['id']);
-    $sql = "SELECT * FROM backendprojekt_posts Where id = :id";
+    $sql = "SELECT * FROM backendprojekt_posts WHERE id = :id";
     $stmt = $db->prepare($sql);
     $stmt ->bindParam(':id', $id);
     $stmt -> execute();
@@ -70,6 +70,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     type="text" 
     id="subject"
     name="subject"
+    size="50"
     value="<?php echo $subject ?>">
 <br>
 
@@ -95,7 +96,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     </textarea>
 
 
-<!--ladda upp bilder här-->
+<!--del för att redigera/ta bort bilder-->
 
 <br>
 <br>
