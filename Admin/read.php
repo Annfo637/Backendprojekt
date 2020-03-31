@@ -8,27 +8,33 @@ require_once 'db.php';
         $id    = htmlspecialchars($row['id']);
         $subject = htmlspecialchars($row['subject']);
         $message = htmlspecialchars($row['message']);
-        $iframe = $row ['iframe'];
-        $image = htmlspecialchars($row['image']);
         $date = htmlspecialchars($row['date']);
         $publish = htmlspecialchars($row['publish']);
+        $iframe = $row['iframe'];
+        $image = htmlspecialchars($row['image']);
         
       if($publish === 'publicerad'){
-            echo 
-            "<div>
+        echo 
+        "<div>
                 <h2>$subject</h2>
-                <br>
-                <div>
-                    <p>";
-                    echo str_replace(PHP_EOL, "</p><p>", $message);
-                    echo "</p>
-                </div>
-                <br>
+            <br>
+            <div>
+                <p>";
+                echo str_replace(PHP_EOL, "</p><p>", $message);
+                echo "</p>
+            </div>
+            <br>
                 <div>$image</div>
-                <br>
-                <p>$date</p>
-                <hr>
-            </div>";
+            <br>
+                <div>$iframe</div>
+            <br>
+                 <p>$date</p>
+            <hr>
+        </div>";
       }
 
     endwhile;
+?>
+
+
+   

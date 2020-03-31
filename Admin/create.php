@@ -1,33 +1,34 @@
 <?php
 
+//Startsida för adminfunktionen
 //Formulär för att skapa innehåll till bloggsidan
 
   require_once 'db.php';
   require_once 'header.php';
-  
 
   if($_SERVER['REQUEST_METHOD'] === 'POST') :
     //print_r($_POST);
-    $sql = "INSERT INTO backendprojekt_posts(subject, message, iframe, image)
-            VALUES (:subject, :message, :iframe, :image)";
+    $sql = "INSERT INTO backendprojekt_posts(subject, message, publish, iframe, image)
+            VALUES (:subject, :message, :publish, :iframe, :image)";
 
     $stmt =  $db->prepare($sql);
 
     $subject = htmlspecialchars($_POST['subject']);
     $message = htmlspecialchars($_POST['message']);
-    $iframe = htmlspecialchars($_POST['iframe']);
+    $publish = htmlspecialchars($_POST['publish']);
+    $iframe = ($_POST['iframe']);
     $image = htmlspecialchars($_POST['image']);
-    //$publish = htmlspecialchars($_POST['publish']);
-    
+   
 
     $stmt->bindParam(':subject', $subject);
     $stmt->bindParam(':message', $message);
+    $stmt->bindParam(':publish', $publish);
     $stmt->bindParam(':iframe',  $iframe);
     $stmt->bindParam(':image', $image);
-    //$stmt->bindParam(':publish', $publish);
+  
    
     $stmt->execute();
-
+    header('Location:index.php');
   endif;
 
   require_once 'header.php';
@@ -51,15 +52,19 @@
     id="message" 
     cols="100" 
     rows="30"
-    maxlength="1000">
+    maxlength="5000">
     </textarea>
 <br>
 <label for="iframe">Videoklipp/kartor här</label>
 <br>
-<input 
-type="text"
-id="iframe"
-name="iframe">
+<textarea 
+    name="iframe" 
+    id="iframe"
+    cols="100" 
+    rows="5"
+    >
+    </textarea>
+
 <br>
 <br>
 <button>
@@ -68,17 +73,17 @@ name="iframe">
 <br>
   <ul></ul>
 
-
-<br>
-<br>
+  
+  <br>
+  <br>
 <h3>Välj om du vill publicera eller avpublicera detta inlägg</h3>
 <input 
           type='radio' 
           id='publicerad' 
           name='publish' 
           value='publicerad'
-          checked='true'
-          required="required">
+          required="required"
+          checked>
           <label for='publicerad'>Publicera</label><br>
         <input 
           type='radio' 
@@ -97,12 +102,8 @@ name="iframe">
 </form>
 <br>
 
-
 <button>
   <a href="index.php">Adminpanelen</a>
-</button>
-<button>
-  <a href="../index.php">Visa min blogg</a>
 </button>
 
 <?php

@@ -20,6 +20,7 @@
       $subject = $row['subject'];
       $message = $row['message'];
       $publish = $row['publish'];
+      $iframe = $row['iframe'];
  
     } else {
       header('Location:show-posts.php');
@@ -38,21 +39,23 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
   $subject = ($_POST['subject']);
   $message = ($_POST['message']);
   $publish = ($_POST['publish']);
+  $iframe = ($_POST['iframe']);
  
   
 
   $sql = "UPDATE backendprojekt_posts
-          SET subject = :subject, message= :message, publish= :publish
+          SET subject = :subject, message= :message, publish= :publish, iframe= :iframe
           WHERE id = :id";
 
   $stmt = $db->prepare($sql);
   $stmt->bindParam(':subject', $subject);
   $stmt->bindParam(':message', $message);
   $stmt->bindParam(':publish', $publish);
+  $stmt->bindParam(':iframe', $iframe);
   $stmt->bindParam(':id', $id);
 
   $stmt->execute();
-  header('Location:show-posts.php');
+  header('Location:index.php');
   exit;
 }
 ?>
@@ -77,44 +80,44 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     id="message" 
     cols="100" 
     rows="30"
-    maxlength="1000">
+    maxlength="5000">
     <?php echo $message?>
     </textarea>
 <br>
-
-<!-- separat textarea för kartor, videos
-<label for="iframe">Lägg till (länk till?) en karta eller video</label>
+<label for="iframe">Videoklipp/kartor här</label>
 <br>
 <textarea 
     name="iframe" 
-    id="iframe" 
-    cols="100" ?
-    rows="30" ?
-    maxlength="1000"> ?
+    id="iframe"
+    cols="100" 
+    rows="5"> 
+    <?php echo $iframe ?>
     </textarea>
-<br>
--->
+
 
 <!--ladda upp bilder här-->
- 
+
+<br>
 <br>
 <p>Detta inlägg har status: <?php echo $publish ?>.</p>
 
 <h3>Välj om du vill publicera eller avpublicera detta inlägg</h3>
-    <input 
-        type='radio' 
-        id='publicerad' 
-        name='publish' 
-        value='publicerad'
-        required="required">
-    <label for='publicerad'>Publicera</label><br>
-    <input 
-        type='radio' 
-        id='avpublicerad' 
-        name='publish' 
-        value='avpublicerad'
-        required="required">
-    <label for='avpublicerad'>Avpublicera</label><br>
+<input 
+          type='radio' 
+          id='publicerad' 
+          name='publish' 
+          value='publicerad'
+          required="required"
+          >
+          <label for='publicerad'>Publicera</label><br>
+        <input 
+          type='radio' 
+          id='avpublicerad' 
+          name='publish' 
+          value='avpublicerad'
+          required="required">
+          
+          <label for='avpublicerad'>Avpublicera</label><br>
 
 <br>
 <input
@@ -124,15 +127,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 <br>
 <br>
 </form>
-<button>
-  <a href="show-posts.php">Redigera/radera mina inlägg</a>
-</button>
+
 <button>
   <a href="index.php">Adminpanelen</a>
 </button>
-<button>
-  <a href="../index.php">Visa min blogg</a>
-</button>
+
 
 <?php
 require_once 'footer.php';

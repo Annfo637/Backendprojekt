@@ -14,6 +14,9 @@ if(isset($_GET['id'])){
   $stmt->execute();
 }
 
-//pop-up med bekräfta/avbryt-knappar? Nu kommer man direkt tillbaka till show-posts
+//pop-up med bekräfta/avbryt-knappar?
 
-header('Location:show-posts.php');
+header('Location:index.php');
+
+?>
+
