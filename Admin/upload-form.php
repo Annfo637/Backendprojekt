@@ -7,7 +7,7 @@ if (!empty($success)) {
     echo $success;
 }
 //Kontrollera eventuella felmeddelanden
-if (count($errors) > 0) {
+if (!empty($errors)) {
     echo '<ul>
             <li>' . implode('</li><li>', $errors) . '</li>
         </ul';
@@ -20,5 +20,19 @@ if (count($errors) > 0) {
         <input type="submit" value="Ladda upp" name="submit">
     </fieldset>
 </form>
+<br>
+<?php 
+    if (!empty($imgArray)) {
+        echo '<ul>
+                <li>' . implode('</li><li>', $imgArray) . '</li>
+            </ul';
+}
+?>
+<br>
+<br>
+<button>
+  <a href="create.php">Tillbaka till skapa inlägg</a>
+</button>
+
 <?php
 require_once 'footer.php';

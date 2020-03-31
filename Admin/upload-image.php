@@ -1,11 +1,13 @@
 <?php
+$imgArray = array(); //testat att deklarera bildarrayen längst ut
 if (isset($_POST['submit'])) {
     $max_file_size = 1048576;
     $file_types = array('gif', 'jpg', 'jpeg', 'png');
    //mapp där bilder ska sparas
-    $target_dir = realpath(dirname(__FILE__)) . "/images/";
+    $target_dir = realpath(dirname(__FILE__)) . '/images/';
     $errors = array();
-
+    //$imgArray = array(); //Tömmer denna arrayen för varje POST?
+    
     //bildinformation
     $file_tmp = $_FILES['image']['tmp_name'];
     $file_name = $_FILES['image']['name'];
@@ -13,6 +15,7 @@ if (isset($_POST['submit'])) {
     $file_uniq = uniqid();
     $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
     $file = $target_dir . $file_uniq . '.' . $file_ext;
+    //$file = $target_dir . $file_name;
 
     //Kontrollera att fil har laddats upp
     if (!is_uploaded_file($file_tmp)) {
@@ -37,12 +40,18 @@ if (isset($_POST['submit'])) {
     //Kontrollerar om fel uppstått 
     if (count($errors) == 0){
         //Kontrollera om filen sparats i angiven mapp
-        if (move_uploaded_file($file_name, $file)) {
+        if (move_uploaded_file($file_tmp, $file)) {
             $success = 'Filen har laddats upp.';
+            $imgArray [] .= $file_name;
+            //echo $file_name;
+            print_r($imgArray);
         }
         else {
             $errors [] = 'Ett fel inträffade vid uppladdning av bilden.';
         }
     }
 }
+//$imgArray = array();
+//$imgArray [] = $image;
+//print_r($imgArray);
 ?>
